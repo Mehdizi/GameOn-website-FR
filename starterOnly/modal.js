@@ -15,7 +15,7 @@ const regex_birthdate =
 const regex_quantity = /^[0-9]{1,2}$/;
 // const regex_name = /[A-Za-zîï]/
 
-// champ validation pour submit
+// validation const for submit
 let firstName_validation = false;
 let lastName_validation = false;
 let email_validation = false;
@@ -25,33 +25,13 @@ let tournamentLocation_validation = false;
 let userCondition_validation = false;
 
 // DOM Elements
-// const succes = document.querySelector(".modal-body");
-const userCondition_error = document.querySelector(".userCondition_error");
-const tournamentLocation = document.querySelectorAll("input[type=radio]");
-const tournamentLocation_error = document.querySelector(".locationData_error");
-const quantity = document.querySelector("#quantity");
-const birthdate = document.querySelector("#birthdate");
-const email = document.querySelector("#email");
-const lastName = document.querySelector("#last");
-const firstName = document.querySelector("#first");
-const information = document.querySelector(".information");
-const firstName_error = document.querySelector(".firstName_error");
-const lastName_error = document.querySelector(".lastName_error");
-const email_error = document.querySelector(".email_error");
-const birthdate_error = document.querySelector(".birthdate_error");
-const quantity_error = document.querySelector(".quantity_error");
-const validation = document.getElementById("validation_form");
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
-const formData = document.querySelectorAll(".formData");
 const modalCloseCross = document.querySelector(".close");
 const successPage = document.querySelector("#success");
 const modalData = document.querySelector(".modal-body");
 const inscriptionForm = document.querySelector("#inscriptionForm");
 const successPageCloseBtn = document.querySelector("#successPageCloseBtn");
-
-// Vérification que le submit est correct
-// validation.addEventListener("click", valid_submit);
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
@@ -61,9 +41,6 @@ modalCloseCross.addEventListener("click", closeModal);
 
 // button to close the success page modal
 successPageCloseBtn.addEventListener("click", closeModal);
-
-// cross to close the success modal
-// modalSuccessCloseBtn.addEventListener("click", closeSuccessModal);
 
 // launch modal form
 function launchModal() {
@@ -87,18 +64,20 @@ function closeModal() {
     modalbg.style.display = "none";
   }
 }
-// close the success modal with the close cross
-// function closeSuccessModal() {
-//   successPage.style.display = "none";
-//   // modalbg.style.display = "none";
-//   // modalData.style.display = "block";
-// }
+
 // close the modal with escape key
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") {
     modalbg.style.display = "none";
   }
 });
+
+// Condition in the FormData for the firstName and Name champ
+const firstName = document.querySelector("#first");
+const firstName_error = document.querySelector(".firstName_error");
+
+const lastName = document.querySelector("#last");
+const lastName_error = document.querySelector(".lastName_error");
 
 document.querySelector("#first").addEventListener("input", firstName_validator);
 document.querySelector("#last").addEventListener("input", lastName_validator);
@@ -115,7 +94,6 @@ function firstName_validator(e) {
     firstName.style.borderColor = "rgb(255, 0, 0)";
     firstName_validation = false;
   }
-  // console.log(firstName_validation);
 }
 
 function lastName_validator(e) {
@@ -128,8 +106,11 @@ function lastName_validator(e) {
     lastName.style.borderColor = "rgb(255, 0, 0)";
     lastName_validation = false;
   }
-  // console.log(lastName_validation);
 }
+
+// Condition in the FormData for the email champ
+const email = document.querySelector("#email");
+const email_error = document.querySelector(".email_error");
 
 email.addEventListener("input", (e) => {
   if (e.currentTarget.value.match(regex_email)) {
@@ -141,8 +122,11 @@ email.addEventListener("input", (e) => {
     email_error.style.color = "rgb(255, 0, 0)";
     email_validation = false;
   }
-  // console.log(email_validation);
 });
+
+// Condition in the FormData for the birthdate champ
+const birthdate = document.querySelector("#birthdate");
+const birthdate_error = document.querySelector(".birthdate_error");
 
 birthdate.addEventListener("change", (e) => {
   const actualDate = new Date();
@@ -162,6 +146,10 @@ birthdate.addEventListener("change", (e) => {
   }
 });
 
+// Condition in the FormData for the quantity champ
+const quantity = document.querySelector("#quantity");
+const quantity_error = document.querySelector(".quantity_error");
+
 quantity.addEventListener("input", (e) => {
   if (e.currentTarget.value.match(regex_quantity)) {
     quantity_error.style.color = "transparent";
@@ -175,6 +163,10 @@ quantity.addEventListener("input", (e) => {
   }
 });
 
+// Condition in the FormData for the tournament location champ
+const tournamentLocation = document.querySelectorAll("input[type=radio]");
+const tournamentLocation_error = document.querySelector(".locationData_error");
+
 tournamentLocation.forEach(function (location) {
   location.addEventListener("change", (e) => {
     if (e.currentTarget.checked === true) {
@@ -186,21 +178,16 @@ tournamentLocation.forEach(function (location) {
   });
 });
 
-// Validation of user-condition selection
+// Condition in the FormData for the user-condition champ
+const userCondition_error = document.querySelector(".userCondition_error");
+
 document.querySelector("#checkbox1").addEventListener("change", (e) => {
   if (e.currentTarget.checked === true) userCondition_validation = true;
   userCondition_error.style.color = "transparent";
 });
 
+// Validation of the submit button
 document.querySelector(".btn-submit").addEventListener("click", (e) => {
-  // console.log("submit");
-  // console.log(firstName_validation);
-  // console.log(lastName_validation);
-  // console.log(email_validation);
-  // console.log(birthdate_validation);
-  // console.log(quantity_validation);
-  // console.log(tournamentLocation_validation);
-  // console.log(userCondition_validation);
   if (
     firstName_validation &&
     lastName_validation &&
@@ -211,7 +198,7 @@ document.querySelector(".btn-submit").addEventListener("click", (e) => {
     tournamentLocation_validation &&
     userCondition_validation
   ) {
-    // Ici il faut afficher la page de succes d'inscription
+    // when the FormData succeed
     e.preventDefault();
     firstName.style.borderColor = "rgb(204, 204, 204)";
     lastName.style.borderColor = "rgb(204, 204, 204)";
@@ -221,8 +208,8 @@ document.querySelector(".btn-submit").addEventListener("click", (e) => {
     inscriptionForm.reset();
     modalData.style.display = "none";
     successPage.style.display = "flex";
-    // ajouter une fonction .reset pour reset le formulaire
   }
+  // If there is an error on the formular
   if (firstName_validation === false) {
     e.preventDefault();
     firstName_error.style.color = "rgb(255, 0, 0)";
