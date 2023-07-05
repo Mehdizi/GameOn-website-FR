@@ -8,7 +8,7 @@ function editNav() {
 }
 
 // regex for valid input
-const regex_name = /^[A-Za-zÀ-ÿ- ]{2,25}$/;
+const regex_name = /^(?=.{2,25}$)[A-Za-zÀ-ÿ]+(?:[- ][A-Za-zÀ-ÿ]+)?$/;
 const regex_email = /^[a-zA-ZÀ-ÿ0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]{2,3}$/;
 const regex_birthdate =
   /^(19[0-9][0-9]|20[0-9][0-9])(-)(0[1-9]|1[0-2])(-)(0[1-9]|[1-2][0-9]|3[0-1])$/;
