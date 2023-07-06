@@ -628,29 +628,30 @@ footer {
   font-weight: 300;
 }
 
-.firstName_error,
-.lastName_error,
-.email_error,
-.birthdate_error,
-.quantity_error,
-.locationData_error,
-.userCondition_error {
-  color: transparent;
+.firstNameError,
+.lastNameError,
+.emailError,
+.birthdateError,
+.quantityError,
+.tournamentLocationError,
+.userConditionError {
+  color: red;
+  opacity: 0;
 }
 
-.success-message {
+#success {
   display: none;
   flex-direction: column;
   align-items: center;
   margin-top: 60%;
   margin-bottom: 60%;
 }
-.success-message h2 {
+#success h2 {
   font-size: 2.25rem;
   font-weight: 300;
   text-align: center;
 }
-.success-message button {
+#success button {
   position: absolute;
   bottom: 5%;
   color: white;

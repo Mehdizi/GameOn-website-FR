@@ -1,28 +1,42 @@
-function editNav() {
-  var x = document.getElementById("myTopnav");
-  if (x.className === "topnav") {
-    x.className += " responsive";
-  } else {
-    x.className = "topnav";
-  }
+// CONST TO VALIDATE THE EVENT SUBMIT
+let firstNameValidation = false;
+let lastNameValidation = false;
+let emailValidation = false;
+let birthdateValidation = false;
+let quantityValidation = false;
+let tournamentLocationValidation = false;
+let userConditionValidation = false;
+
+// GLOBAL CONST TO INTERACT WITH THE FORMULAR
+const green = "rgb(0, 255, 0)";
+const red = "rgb(255, 0, 0)";
+const grey = "rgb(204, 204, 204)";
+const transparent = "0";
+const appear = "1";
+
+// GLOBAL FUNCTION TO INTERACT WITH THE FORMULAR
+function successData(elem, errorElem) {
+  elem.style.borderColor = green;
+  errorElem.style.opacity = transparent;
 }
 
-// regex for valid input
+function errorData(elem, errorElem) {
+  elem.style.borderColor = red;
+  errorElem.style.opacity = appear;
+}
+
+function resetData(...elems) {
+  elems.forEach((elem) => {
+    elem.style.borderColor = grey;
+  });
+}
+
+// REGEX TO VALIDATE INPUTS
 const regex_name = /^(?=.{2,25}$)[A-Za-zÀ-ÿ]+(?:[- ][A-Za-zÀ-ÿ]+)?$/;
 const regex_email = /^[a-zA-ZÀ-ÿ0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]{2,3}$/;
 const regex_birthdate =
   /^(19[0-9][0-9]|20[0-9][0-9])(-)(0[1-9]|1[0-2])(-)(0[1-9]|[1-2][0-9]|3[0-1])$/;
 const regex_quantity = /^[0-9]{1,2}$/;
-// const regex_name = /[A-Za-zîï]/
-
-// validation const for submit
-let firstName_validation = false;
-let lastName_validation = false;
-let email_validation = false;
-let birthdate_validation = false;
-let quantity_validation = false;
-let tournamentLocation_validation = false;
-let userCondition_validation = false;
 
 // DOM Elements
 const modalbg = document.querySelector(".bground");
@@ -33,100 +47,102 @@ const modalData = document.querySelector(".modal-body");
 const inscriptionForm = document.querySelector("#inscriptionForm");
 const successPageCloseBtn = document.querySelector("#successPageCloseBtn");
 
-// launch modal event
+// FUNCTION FOR THE RESPONSIVE NAVBAR
+function editNav() {
+  var x = document.getElementById("myTopnav");
+  if (x.className === "topnav") {
+    x.className += " responsive";
+  } else {
+    x.className = "topnav";
+  }
+}
+
+// LAUNCHE THE MODAL EVENT
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 
-// cross to close de formdata modal
+// CROSSE TO CLOSE THE FORMDATA MODAL
 modalCloseCross.addEventListener("click", closeModal);
 
-// button to close the success page modal
+// BUTTON TO CLOSE THE SUCCESS PAGE MODAL
 successPageCloseBtn.addEventListener("click", closeModal);
 
-// launch modal form
+// LAUNCH THE MODAL FORM
 function launchModal() {
   modalbg.style.display = "block";
 }
 
-// close the modal with the close cross
+// CLOSE THE MODAL WITH THE CROSS
 function closeModal() {
-  if ((successPage.style.display = "flex")) {
+  if (successPage.style.display === "flex") {
     successPage.style.display = "none";
     modalData.style.display = "block";
     modalbg.style.display = "none";
-    firstName_validation = false;
-    lastName_validation = false;
-    email_validation = false;
-    birthdate_validation = false;
-    quantity_validation = false;
-    tournamentLocation_validation = false;
-    userCondition_validation = false;
+    firstNameValidation = false;
+    lastNameValidation = false;
+    emailValidation = false;
+    birthdateValidation = false;
+    quantityValidation = false;
+    tournamentLocationValidation = false;
+    userConditionValidation = false;
   } else {
     modalbg.style.display = "none";
   }
 }
 
-// close the modal with escape key
+// CLOSE THE MODAL WITH ESCAPE BUTTON
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") {
     modalbg.style.display = "none";
   }
 });
 
-// Condition in the FormData for the firstName and Name champ
+// CONDITION FOR THE FORMDATA
+
+// FIRSTNAME CONDITION
 const firstName = document.querySelector("#first");
-const firstName_error = document.querySelector(".firstName_error");
+const firstNameError = document.querySelector(".firstNameError");
 
-const lastName = document.querySelector("#last");
-const lastName_error = document.querySelector(".lastName_error");
-
-document.querySelector("#first").addEventListener("input", firstName_validator);
-document.querySelector("#last").addEventListener("input", lastName_validator);
-
-function firstName_validator(e) {
+firstName.addEventListener("input", (e) => {
   if (e.currentTarget.value.match(regex_name)) {
-    firstName.style.borderColor = "rgb(0, 255, 0)";
-    firstName_error.style.color = "transparent";
-    firstName_validation = true;
+    successData(firstName, firstNameError);
+    firstNameValidation = true;
   } else {
-    firstName_error.textContent =
-      "Veuillez saisir un prénom entre 2 et 25 lettres";
-    firstName_error.style.color = "rgb(255, 0, 0)";
-    firstName.style.borderColor = "rgb(255, 0, 0)";
-    firstName_validation = false;
-  }
-}
-
-function lastName_validator(e) {
-  if (e.currentTarget.value.match(regex_name)) {
-    lastName_error.style.color = "transparent";
-    lastName.style.borderColor = "rgb(0, 255, 0)";
-    lastName_validation = true;
-  } else {
-    lastName_error.style.color = "rgb(255, 0, 0)";
-    lastName.style.borderColor = "rgb(255, 0, 0)";
-    lastName_validation = false;
-  }
-}
-
-// Condition in the FormData for the email champ
-const email = document.querySelector("#email");
-const email_error = document.querySelector(".email_error");
-
-email.addEventListener("input", (e) => {
-  if (e.currentTarget.value.match(regex_email)) {
-    email_error.style.color = "transparent";
-    email.style.borderColor = "rgb(0, 255, 0)";
-    email_validation = true;
-  } else {
-    email.style.borderColor = "rgb(255, 0, 0)";
-    email_error.style.color = "rgb(255, 0, 0)";
-    email_validation = false;
+    errorData(firstName, firstNameError);
+    firstNameValidation = false;
   }
 });
 
-// Condition in the FormData for the birthdate champ
+// LASTNAME CONDITION
+const lastName = document.querySelector("#last");
+const lastNameError = document.querySelector(".lastNameError");
+
+lastName.addEventListener("input", (e) => {
+  if (e.currentTarget.value.match(regex_name)) {
+    successData(lastName, lastNameError);
+    lastNameValidation = true;
+  } else {
+    errorData(lastName, lastNameError);
+    lastNameValidation = false;
+  }
+});
+
+// EMAIL CONDITION
+const email = document.querySelector("#email");
+const emailError = document.querySelector(".emailError");
+
+email.addEventListener("input", (e) => {
+  if (e.currentTarget.value.match(regex_email)) {
+    successData(email, emailError);
+    emailValidation = true;
+  } else {
+    errorData(email, emailError);
+    emailValidation = false;
+  }
+});
+
+// BIRTHDATE CONDITION
 const birthdate = document.querySelector("#birthdate");
-const birthdate_error = document.querySelector(".birthdate_error");
+const birthdateError = document.querySelector(".birthdateError");
 
 birthdate.addEventListener("change", (e) => {
   const actualDate = new Date();
@@ -135,114 +151,102 @@ birthdate.addEventListener("change", (e) => {
     e.currentTarget.value.match(regex_birthdate) &&
     user_birthDate < actualDate
   ) {
-    birthdate.style.borderColor = "rgb(0, 255, 0)";
-    birthdate_error.style.color = "transparent";
-    birthdate_validation = true;
+    successData(birthdate, birthdateError);
+    birthdateValidation = true;
   } else {
-    birthdate_error.style.color = "rgb(255, 0, 0)";
-    birthdate.style.borderColor = "rgb(255, 0, 0)";
-
-    birthdate_validation = false;
+    errorData(birthdate, birthdateError);
+    birthdateValidation = false;
   }
 });
 
-// Condition in the FormData for the quantity champ
+// QUANTITY CONDITION
 const quantity = document.querySelector("#quantity");
-const quantity_error = document.querySelector(".quantity_error");
+const quantityError = document.querySelector(".quantityError");
 
 quantity.addEventListener("input", (e) => {
   if (e.currentTarget.value.match(regex_quantity)) {
-    quantity_error.style.color = "transparent";
-    quantity.style.borderColor = "rgb(0, 255,  0)";
-    quantity_validation = true;
+    successData(quantity, quantityError);
+    quantityValidation = true;
   } else {
-    quantity_validation = false;
-    quantity_error.textContent = "Veuillez sélectionner un nombre en 0 et 99";
-    quantity_error.style.color = "rgb(255, 0, 0)";
-    quantity.style.borderColor = "rgb(255, 0,  0)";
+    errorData(quantity, quantityError);
+    quantityValidation = false;
   }
 });
 
-// Condition in the FormData for the tournament location champ
+// TOURNAMENT LOCATION CONDITION
 const tournamentLocation = document.querySelectorAll("input[type=radio]");
-const tournamentLocation_error = document.querySelector(".locationData_error");
+const tournamentLocationError = document.querySelector(
+  ".tournamentLocationError"
+);
 
 tournamentLocation.forEach(function (location) {
   location.addEventListener("change", (e) => {
     if (e.currentTarget.checked === true) {
-      tournamentLocation_validation = true;
-      tournamentLocation_error.style.color = "transparent";
+      tournamentLocationValidation = true;
+      tournamentLocationError.style.opacity = transparent;
     } else {
-      tournamentLocation_validation = false;
+      tournamentLocationError.style.opacity = appear;
+      tournamentLocationValidation = false;
     }
   });
 });
 
-// Condition in the FormData for the user-condition champ
-const userCondition_error = document.querySelector(".userCondition_error");
+// USER_CONDITION CONDITION
+const userConditionError = document.querySelector(".userConditionError");
 
 document.querySelector("#checkbox1").addEventListener("change", (e) => {
-  if (e.currentTarget.checked === true) userCondition_validation = true;
-  userCondition_error.style.color = "transparent";
+  if (e.currentTarget.checked === true) {
+    userConditionValidation = true;
+    userConditionError.style.opacity = transparent;
+  } else {
+    userConditionValidation = false;
+    userConditionError.style.opacity = appear;
+  }
 });
 
-// Validation of the submit button
-document.querySelector(".btn-submit").addEventListener("click", (e) => {
+// VALIDATION OF THE FORMULAR WITH THE SUBMIT BUTTON
+
+const ButtonSubmit = document.querySelector(".btn-submit");
+
+ButtonSubmit.addEventListener("click", (e) => {
+  // PREVENT DEFAULT THE ENTIRE FONCTION TO NOT RESET THE PAGE
+  e.preventDefault();
   if (
-    firstName_validation &&
-    lastName_validation &&
-    email_validation &&
-    userCondition_validation &&
-    quantity_validation &&
-    birthdate_validation &&
-    tournamentLocation_validation &&
-    userCondition_validation
+    // IF ALL CONDITION OF THE FORMDATA ARE TRUE
+    firstNameValidation &&
+    lastNameValidation &&
+    emailValidation &&
+    quantityValidation &&
+    birthdateValidation &&
+    tournamentLocationValidation &&
+    userConditionValidation
   ) {
-    // when the FormData succeed
-    e.preventDefault();
-    firstName.style.borderColor = "rgb(204, 204, 204)";
-    lastName.style.borderColor = "rgb(204, 204, 204)";
-    email.style.borderColor = "rgb(204, 204, 204)";
-    birthdate.style.borderColor = "rgb(204, 204, 204)";
-    quantity.style.borderColor = "rgb(204, 204, 204)";
+    // WHEN THE INSCRIPTION FORMDATA SUCCEED 1| Reset the formular 2|reset the css of the formular 3|Display the success message
     inscriptionForm.reset();
+    resetData(firstName, lastName, email, birthdate, quantity);
     modalData.style.display = "none";
     successPage.style.display = "flex";
   }
-  // If there is an error on the formular
-  if (firstName_validation === false) {
-    e.preventDefault();
-    firstName_error.style.color = "rgb(255, 0, 0)";
-    firstName.style.borderColor = "rgb(255, 0, 0)";
+  // IF THERE IS AN ERROR ON ONE CHAMP OF THE INSCRIPTION FORMDATA DO THE FUNCTION "errorData"
+  if (firstNameValidation === false) {
+    errorData(firstName, firstNameError);
   }
-  if (lastName_validation === false) {
-    e.preventDefault();
-    lastName_error.style.color = "rgb(255, 0, 0)";
-    lastName.style.borderColor = "rgb(255, 0, 0)";
+  if (lastNameValidation === false) {
+    errorData(lastName, lastNameError);
   }
-  if (email_validation === false) {
-    e.preventDefault();
-    email_error.style.color = "rgb(255, 0, 0)";
-    email.style.borderColor = "rgb(255, 0, 0)";
+  if (emailValidation === false) {
+    errorData(email, emailError);
   }
-  if (birthdate_validation === false) {
-    e.preventDefault();
-    birthdate_error.style.color = "rgb(255, 0, 0)";
-    birthdate.style.borderColor = "rgb(255, 0, 0)";
+  if (birthdateValidation === false) {
+    errorData(birthdate, birthdateError);
   }
-  if (quantity_validation === false) {
-    e.preventDefault;
-    quantity_error.style.color = "rgb(255, 0, 0)";
-    quantity.style.borderColor = "rgb(255, 0, 0)";
+  if (quantityValidation === false) {
+    errorData(quantity, quantityError);
   }
-  if (tournamentLocation_validation === false) {
-    e.preventDefault();
-    tournamentLocation_error.style.color = "rgb(255, 0, 0)";
+  if (tournamentLocationValidation === false) {
+    tournamentLocationError.style.opacity = appear;
   }
-  if (userCondition_validation === false) {
-    e.preventDefault();
-    userCondition_error.style.color = "rgb(255, 0, 0)";
-  } else {
-    e.preventDefault();
+  if (userConditionValidation === false) {
+    userConditionError.style.opacity = appear;
   }
 });
