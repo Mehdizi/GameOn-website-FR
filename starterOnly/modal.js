@@ -15,7 +15,7 @@ const transparent = "0";
 const appear = "1";
 
 // GLOBAL FUNCTION TO INTERACT WITH THE FORMULAR
-function successData(elem, errorElem) {
+function successData(elem, errorElem, validationElem) {
   elem.style.borderColor = green;
   errorElem.style.opacity = transparent;
 }
@@ -146,6 +146,7 @@ const birthdateError = document.querySelector(".birthdateError");
 
 birthdate.addEventListener("change", (e) => {
   const actualDate = new Date();
+  console.log(Object.entries(Date));
   const user_birthDate = new Date(e.currentTarget.value);
   if (
     e.currentTarget.value.match(regex_birthdate) &&
